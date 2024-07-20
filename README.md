@@ -73,8 +73,8 @@ Isso levantou algumas hipóteses sobre a base de produtos:
     - 2.6. Ver distribuição
    
 - **3. Aplicar técnica de análise**
-    - Validar hipótese
-    - Aplicar segmentação
+    - 3.1. Validar hipótese
+    - 3.2. Aplicar segmentação
 
 - **4. Resumir informações e apresentar resultados em um dashboard**
     - 4.1. Dashboard
@@ -559,9 +559,208 @@ SELECT * FROM quintis
 
 ![rating e rating_count categoria_produto](https://github.com/user-attachments/assets/71abd93d-68ec-4c08-856e-c8ac54c0f121)
 
+
+
+### 2.4. Aplicar medidas de tendência central
+
+
+### 2.5. Aplicar medidas de dispersão
+
+
+### 2.6. Ver distribuição
+
+
+   
 ## 3. Aplicar técnica de análise
 
+
+### 3.1. Validar hipótese
+ 
+ 
+![Hipótese 1](https://github.com/user-attachments/assets/14a1e7db-187d-4593-9ac1-f941efc564e1)
+
+
+
+![Hipótese 2](https://github.com/user-attachments/assets/b7208118-b78d-4f1a-9485-751b51ad70fc)
+
+
+
+![Hipótese 3](https://github.com/user-attachments/assets/09c105e2-eb5e-4d52-a929-d1e17b5d9ff0)
+
+
+
+![Hipótese 4](https://github.com/user-attachments/assets/3dac41bb-d31e-4249-9783-f95af7af0beb)
+
+
+
+### 3.2. Aplicar Segmentação 
+
+
+
+  ```sql
+    --Criando uma coluna com segmentação das avaliações--
+  WITH CategorizedRatings AS (
+  SELECT
+  product_id,
+  product_name,
+  category,
+  discounted_price,
+  actual_price,
+  discount_percentage,
+  about_product,
+  main_category,
+  sub_category,
+  user_id,
+  user_name,
+  review_id,
+  review_title,
+  review_content,
+  rating_count,
+  rating,
+  rating_quintile,
+  rating_count_quintile,
+  actual_price_quintile,
+  discount_percentage_quintile,
+    CASE
+      WHEN rating = 0 THEN '0'
+      WHEN rating >= 0 AND rating < 1 THEN '0-1'
+      WHEN rating >= 1 AND rating < 2 THEN '1-2'
+      WHEN rating >= 2 AND rating < 3 THEN '2-3'
+      WHEN rating >= 3 AND rating < 4 THEN '3-4'
+      WHEN rating >= 4 AND rating < 5 THEN '4-5'
+      WHEN rating = 5 THEN '5'
+    END AS rating_range
+  FROM
+    `projeto-4-caso-consultoria.Amazon.uniao_tabelas`
+)
+SELECT
+  *
+FROM
+  CategorizedRatings
+ORDER BY
+  main_category, rating_range;
+
+--Atualizando a tabela com a coluna com segmentação das avaliações--
+  CREATE OR REPLACE TABLE `projeto-4-caso-consultoria.Amazon.uniao_tabelas` AS
+  WITH CategorizedRatings AS (
+  SELECT
+  product_id,
+  product_name,
+  category,
+  discounted_price,
+  actual_price,
+  discount_percentage,
+  about_product,
+  main_category,
+  sub_category,
+  user_id,
+  user_name,
+  review_id,
+  review_title,
+  review_content,
+  rating_count,
+  rating,
+  rating_quintile,
+  rating_count_quintile,
+  actual_price_quintile,
+  discount_percentage_quintile,
+    CASE
+      WHEN rating = 0 THEN '0'
+      WHEN rating >= 0 AND rating < 1 THEN '0-1'
+      WHEN rating >= 1 AND rating < 2 THEN '1-2'
+      WHEN rating >= 2 AND rating < 3 THEN '2-3'
+      WHEN rating >= 3 AND rating < 4 THEN '3-4'
+      WHEN rating >= 4 AND rating < 5 THEN '4-5'
+      WHEN rating = 5 THEN '5'
+    END AS rating_range
+  FROM
+    `projeto-4-caso-consultoria.Amazon.uniao_tabelas`
+)
+SELECT
+  *
+FROM
+  CategorizedRatings
+ORDER BY
+  main_category, rating_range;
+```
+
+Após realizar a segmentação das avaliações para que fosse possível analisar a satisfação dos clientes de acordo com as categorias de produtos, realizamos uam nova classificação com o objetivo de verificar o desempenho de cada categoria, de acordo com as variáveis: rating, rating_count, actual_price e discount_percentage, para ter uma visão do desempenho do produto na visão da empresa.
+
+
+
+  ```sql
+    --coluna com a média da soma dos quintis das variáveis, rating, rating_count, actual_price e discount_percentage---
+WITH Quintile AS (
+  SELECT
+  product_id,
+  product_name,
+  category,
+  discounted_price,
+  actual_price,
+  discount_percentage,
+  about_product,
+  main_category,
+  sub_category,
+  user_id,
+  user_name,
+  review_id,
+  review_title,
+  review_content,
+  rating_count,
+  rating,
+  rating_quintile,
+  rating_count_quintile,
+  actual_price_quintile,
+  discount_percentage_quintile,
+  rating_range,
+  ROUND((rating_quintile + rating_count_quintile + actual_price_quintile + discount_percentage_quintile) / 4.0) AS average_quintile
+  FROM
+    `projeto-4-caso-consultoria.Amazon.uniao_tabelas`
+)
+SELECT
+  *
+FROM
+  Quintile;
+--Atualizando a tabela---
+CREATE OR REPLACE TABLE `projeto-4-caso-consultoria.Amazon.uniao_tabelas` AS
+WITH Quintile AS (
+  SELECT
+  product_id,
+  product_name,
+  category,
+  discounted_price,
+  actual_price,
+  discount_percentage,
+  about_product,
+  main_category,
+  sub_category,
+  user_id,
+  user_name,
+  review_id,
+  review_title,
+  review_content,
+  rating_count,
+  rating,
+  rating_quintile,
+  rating_count_quintile,
+  actual_price_quintile,
+  discount_percentage_quintile,
+  rating_range,
+  ROUND((rating_quintile + rating_count_quintile + actual_price_quintile + discount_percentage_quintile) / 4.0) AS average_quintile
+  FROM
+    `projeto-4-caso-consultoria.Amazon.uniao_tabelas`
+)
+SELECT
+  *
+FROM
+  Quintile;
+```
+
+
 ## 4. Resumir informações e apresentar resultados em um dashboard
+
+![Dashboard](https://github.com/user-attachments/assets/6225d1c6-64d7-4d74-9bc0-8e96e0980757)
+
 
 ## 5. Conclusões e próximos passos
 
@@ -598,4 +797,3 @@ Com a completude das informações. A análise terá os pilares já citados, com
 **Impulsionando o produto para o sucesso**
 
 Com a complementação dos dados também é possível desenvolver uma Matriz BCG automatizada para que os produtos sejam categorizados com praticidade e estratégias de mercado possam ser traçadas, analisando a participação de mercado e taxa de crescimento do produto.
-
