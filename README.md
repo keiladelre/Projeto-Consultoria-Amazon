@@ -560,11 +560,43 @@ SELECT * FROM quintis
 ![rating e rating_count categoria_produto](https://github.com/user-attachments/assets/71abd93d-68ec-4c08-856e-c8ac54c0f121)
 
 
+![Nulos](https://github.com/user-attachments/assets/592613cb-a062-4f6e-8779-da5d0bc07b80)
+
+
+![Nulos  2](https://github.com/user-attachments/assets/5e81d959-e239-4378-a619-8f6d82a7dcd8)
+
+
+
 
 ### 2.4. Aplicar medidas de tendência central
 
 
 ### 2.5. Aplicar medidas de dispersão
+
+
+![Dispersão 1](https://github.com/user-attachments/assets/599615fc-ca71-4d3d-a3ea-bb37f48f9e70)
+
+
+
+![Dispersão 2](https://github.com/user-attachments/assets/a9bd52fd-87ef-4b12-b6ce-ec45eac44149)
+
+
+
+
+![Dispersão 3](https://github.com/user-attachments/assets/6234b4d2-a0e7-4ab6-be06-1fc3c6eacfbc)
+
+
+
+![Dispersão 4](https://github.com/user-attachments/assets/a074c6b9-8991-46ae-bde5-aaaa6228cbe7)
+
+
+
+
+
+
+
+
+
 
 
 ### 2.6. Ver distribuição
@@ -762,11 +794,20 @@ FROM
 ![Dashboard](https://github.com/user-attachments/assets/6225d1c6-64d7-4d74-9bc0-8e96e0980757)
 
 
+**Tabela de Resumo das Categorias**
+
+
+![Resumo Categorias](https://github.com/user-attachments/assets/f84941be-259e-4d7a-a2ff-70b182c21744)
+
+
+
 ## 5. Conclusões e próximos passos
 
 **Conclusão: Rumo ao Sucesso no Dropshipping**
 
 Ao implementar um modelo de análise de produtos robusto e estratégico, a Amazon e seus fornecedores de dropshipping podem tomar decisões mais assertivas, otimizar seus investimentos e alcançar um sucesso duradouro no mercado dinâmico do comércio eletrônico. A Matriz BCG, como ferramenta complementar, auxilia na identificação de oportunidades e tomada de decisões estratégicas para cada produto da carteira.
+
+Podemos verificar na tabela com resumo das informações das categorias, que o desempenho em satisfação dos clientes deixa a categoria Casa e Cozinha em 1º lugar seguida, de Computadores e acessórios em 2º lugar, Eletrônicos apesar de ser a categoria com mais produtos no seu portfólio e 8,6 milhões de avaliações, esta em 3º lugar, e em 4º lugar Produtos de escritório que apesar de ter a melhor média e possuir 100% dos seus produtos com classificação entre 4 e 5, possui um número de apenas 31 produtos, representando apenas 2,29% do total de produtos.
 
 **Eletrônicos em Foco**
 
